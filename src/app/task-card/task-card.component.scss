@@ -1,0 +1,35 @@
+.taskCard {
+    padding: 20px 10px;
+    background-color: rgb(245, 245, 245);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width:20%;
+    span {
+        margin-right: 5px;
+        text-align: center;
+        color: black;
+        font-size: 24px;
+        padding: 5px 10px;
+    }
+}
+
+.low {
+    background-color: green;
+}
+
+.middle {
+    background-color: rgb(245, 229, 7);
+}
+
+.urgent {
+    background-color: rgb(128, 0, 0);
+}
+
+.urgency {
+    color: white !important;
+    border-radius: 10px;
+    padding: 5px
+}

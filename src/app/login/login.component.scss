@@ -1,0 +1,22 @@
+.form {
+    width: 100%;
+    height: 100vh;
+    overflow-y: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center
+}
+
+.form-field {
+    width: 400px;
+    max-width: 40%;
+}
+
+.signupDiv {
+    width: 95%;
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    padding-top: 20px;
+}
