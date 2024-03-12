@@ -1,8 +1,0 @@
-<div class="taskCard">
-    <span>{{ task['created_at'] | date }}</span>
-    <span>{{task['title']}}</span>
-    <span>{{task['description']}}</span>
-    <span *ngIf="task['low']" class="urgency low">low</span>
-    <span *ngIf="task['middle']" class="urgency middle">middle</span>
-    <span *ngIf="task['urgent']" class="urgency urgent">urgent</span>
-</div>

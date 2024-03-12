@@ -1,0 +1,24 @@
+.urgencies {
+    display: flex;
+    justify-content: space-evenly;
+    width: 100%;
+    padding: 3px;
+}
+
+.urgency {
+    border-radius: 20px;
+    width: 30%;
+    text-align: center;
+}
+
+.bgGreen {
+    background-color: rgb(14, 103, 4);
+}
+
+.bgYellow {
+    background-color: rgb(165, 157, 3);
+}
+
+.bgRed {
+    background-color: rgb(148, 1, 1);
+}

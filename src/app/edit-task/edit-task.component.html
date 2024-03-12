@@ -1,10 +1,24 @@
-<h2 mat-dialog-title>Edit Task</h2>
-<mat-dialog-content>
- <span>{{task.title}}</span>
- <span>{{task.description}}</span>
- <span>{{task.created_at}}</span>
+<mat-dialog-content class="dialog">
+    <h2 mat-dialog-title>Edit Task</h2>
+    <form [formGroup]="editTaskForm" class="example-form" (submit)="saveEditedTask()">
+        <mat-form-field class="example-full-width">
+            <mat-label>Title</mat-label>
+            <input formControlName="title" matInput value="{{task.title}}" name="title">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <label>Description</label>
+            <input formControlName="description" matInput value="{{task.description}}" name="description">
+        </mat-form-field>
+        <mat-form-field class="example-full-width">
+            <label>Created at</label>
+            <input matInput value="{{ task.created_at | date }}">
+        </mat-form-field>
+    </form>
 </mat-dialog-content>
-<mat-dialog-actions>
-  <button mat-button mat-dialog-close>No</button>
-  <button mat-button mat-dialog-close cdkFocusInitial>Ok</button>
+<mat-dialog-actions class="buttons">
+    <div>
+        <button mat-button mat-dialog-close>Cancel</button>
+        <button mat-button mat-dialog-close cdkFocusInitial (click)="saveEditedTask()">Save</button>
+    </div>
+    <button mat-raised-button color="warn" (click)="ts.deleteTask(task.id )">Delete</button>
 </mat-dialog-actions>

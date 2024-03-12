@@ -1,0 +1,24 @@
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!newCategory">
+    <mat-expansion-panel-header>
+        <mat-panel-description>
+            Category:
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <span class="newCat" (click)="toggleNewCategory()">New category</span>
+    <div *ngIf="ts.allTasks.length > 0">
+        <div *ngFor="let task of ts.allTasks" class="catDiv">
+            <span>{{task.category.name}}</span>
+            <div [ngStyle]="{'background-color': task.category.color}" class="categoryColorDiv">
+            </div>
+        </div>
+    </div>
+</mat-expansion-panel>
+<div class="newCategoryDiv" *ngIf="newCategory">
+    <mat-form-field class="form-field">
+        <mat-label>Add category</mat-label>
+        <input [(ngModel)]="category" type="text" name="category" matInput>
+        <div class="colorPicker" *ngIf="task && task.category" [ngStyle]="{'background-color': task.category.color}">
+        </div>
+    </mat-form-field>
+    <app-category-color-pickers *ngIf="newCategory" (addColor)="addCategory($event)"></app-category-color-pickers>
+</div>

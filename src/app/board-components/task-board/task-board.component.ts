@@ -7,11 +7,11 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatSelectModule } from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { TaskService } from '../services/task.service';
+import { TaskService } from '../../services/task.service';
 import {
   MatDialog
 } from '@angular/material/dialog';
-import { EditTaskComponent } from '../edit-task/edit-task.component';
+import { EditTaskComponent } from '../../edit-task/edit-task.component';
 
 
 @Component({

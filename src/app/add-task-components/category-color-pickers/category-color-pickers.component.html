@@ -1,0 +1,4 @@
+<div class="colorPickers">
+    <div *ngFor="let color of colors" (click)="addCategoryColorOnTask(color)" class="colorPicker"
+        [ngStyle]="{'background-color': color}"></div>
+</div>

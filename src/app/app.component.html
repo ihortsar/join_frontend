@@ -1,1 +1,33 @@
-<router-outlet></router-outlet>
+<mat-toolbar>
+  <button *ngIf="router.url !== '/login' && router.url !== '/signup'" (click)="drawer.toggle()" mat-icon-button
+    class="example-icon" aria-label="Example icon-button with menu icon">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span *ngIf="router.url==='/task_board'">Task Board</span>
+  <span class="example-spacer"></span>
+  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon">
+    <mat-icon>favorite</mat-icon>
+  </button>
+  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon">
+    <mat-icon>share</mat-icon>
+  </button>
+  <button mat-raised-button color="primary" *ngIf="router.url==='/login' || router.url==='/'" [routerLink]="['/signup']"
+    routerLinkActive="active">Sign up</button>
+  <button mat-raised-button color="primary" *ngIf="router.url==='/signup'" [routerLink]="['/login']"
+    routerLinkActive="active">Log in</button>
+  <button mat-raised-button color="primary"
+    *ngIf="router.url !=='/signup' && router.url !== '/login'&& router.url !== '/'" (click)="logOut()">Log
+    out</button>
+</mat-toolbar>
+<mat-drawer-container class="example-container" [ngClass]="calculateRouter()" autosize>
+
+
+  <mat-drawer #drawer class="example-sidenav" mode="side">
+    <div class="sideNavDiv">
+      <a class="hrefs" href="/newtask">Add a task</a>
+      <a class="hrefs" href="/task_board">Board</a>
+    </div>
+  </mat-drawer>
+  <router-outlet>
+  </router-outlet>
+</mat-drawer-container>

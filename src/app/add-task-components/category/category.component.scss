@@ -1,0 +1,33 @@
+.categoryWidth {
+    width: 100%
+}
+.catDiv {
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    gap: 10px;
+
+    .categoryColorDiv {
+        height: 15px;
+        width: 15px;
+        border-radius: 50%;
+    }
+}
+
+.newCat {
+    margin-top: 15px;
+}
+
+.inputContainer {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+.newCategoryDiv{
+    
+}
+.form-field {
+    width: 100%;
+}

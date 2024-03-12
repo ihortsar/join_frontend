@@ -1,0 +1,61 @@
+<div class="addTaskContainer">
+    <form [formGroup]="addTaskForm" class="form" (ngSubmit)="addTask()">
+        <div class="subForm">
+
+            <mat-form-field class="form-field">
+                <mat-label>Title</mat-label>
+                <input type="text" formControlName="title" matInput>
+            </mat-form-field>
+
+            <mat-form-field class="form-field">
+                <mat-label>Description</mat-label>
+                <input type="text" formControlName="description" matInput>
+            </mat-form-field>
+
+
+            <div style="position: relative;">
+                <app-category [task]="task"></app-category>
+            </div>
+
+
+
+            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-description>
+                        Assigned to:
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="users">
+                    <p (click)="addUser(user)" *ngFor="let user of us.allUsers">{{user.username}}</p>
+                </div>
+            </mat-expansion-panel>
+        </div>
+
+
+        <div class="subForm">
+            <mat-form-field class="form-field">
+                <mat-label>Due date</mat-label>
+                <input formControlName="date" type="date" name="description" matInput>
+            </mat-form-field>
+
+            <app-priorities (priorityEmitter)="addPriority($event)"></app-priorities>
+
+            <mat-form-field class="form-field subtasks">
+                <mat-label>Subtasks</mat-label>
+                <div class="subtaskAndPlus">
+                    <input type="text" name="subtask" formControlName="subtasks" matInput>
+                    <span (click)="addSubtask()" class="material-symbols-outlined">
+                        add
+                    </span>
+                </div>
+                <div class="addedSubtasks">
+                    <span *ngFor="let subtask of subtasks">{{subtask}}</span>
+                </div>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary" [disabled]="!addTaskForm.valid || !task.category.name || task.category.name.trim() === ''">Add
+                task</button>
+        </div>
+
+    </form>
+</div>

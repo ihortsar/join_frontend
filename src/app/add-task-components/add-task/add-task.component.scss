@@ -1,0 +1,47 @@
+.form {
+
+    height: 85vh;
+    overflow-y: hidden;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    gap: 60px;
+
+    .subForm {
+        display: flex;
+        flex-direction: column;
+        gap: 40px;
+        min-width: 40%;
+    }
+
+
+}
+
+.addTaskContainer {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.subtasks {
+    margin-top: 20px;
+}
+
+.subtaskAndPlus {
+    display: flex;
+
+    span {
+        margin-top: -8px;
+    }
+}
+
+
+
+.addedSubtasks {
+    display: flex;
+    flex-direction: column;
+}
+
