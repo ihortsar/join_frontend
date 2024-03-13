@@ -1,10 +1,11 @@
-<mat-card>
-    <mat-card-content class="taskCard">
+<mat-card class="taskCard">
+    <mat-card-content class="taskContent">
         <span>{{ task['created_at'] | date }}</span>
         <h2>{{task['title']}}</h2>
         <span>{{task['description']}}</span>
         <span *ngIf="task['low']" class="urgency low">low</span>
         <span *ngIf="task['middle']" class="urgency middle">middle</span>
         <span *ngIf="task['urgent']" class="urgency urgent">urgent</span>
+        <span>{{displayCategory().name}}</span>
     </mat-card-content>
 </mat-card>

@@ -15,6 +15,7 @@ import { JoinTask } from '../../../models/task.model';
 import { PrioritiesComponent } from '../priorities/priorities.component';
 import { JoinUser } from '../../../models/user.model';
 import { CategoryComponent } from "../category/category.component";
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-task',
   standalone: true,
@@ -30,7 +31,7 @@ export class AddTaskComponent {
   panelOpenState = false;
 
 
-  constructor(private http: HttpClient, public us: UsersService, public ts: TaskService) {
+  constructor(private router: Router, public us: UsersService, public ts: TaskService) {
     this.us.getUsers();
     this.ts.loadTasks()
     console.log(this.ts.allTasks);
@@ -47,14 +48,15 @@ export class AddTaskComponent {
   })
 
 
-  addTask() {
+  async addTask() {
     if (this.addTaskForm) {
       this.task.title = this.addTaskForm.get('title')?.value as string;
       this.task.description = this.addTaskForm.get('description')?.value as string;
       this.task.due_date = this.addTaskForm.get('date')?.value as string;
-      this.task.subtasks = this.subtasks
-      console.log(JSON.stringify(this.task));
-      this.ts.addTask(JSON.stringify(this.task))
+      this.task.subtasks = this.subtasks;
+      this.task.state = 'toDo'
+      await this.ts.addTask(this.task)
+      this.router.navigateByUrl('/task_board');
     }
   }
 
@@ -67,7 +69,7 @@ export class AddTaskComponent {
   }
 
 
- 
+
 
   addPriority(priority: any) {
     this.task.priority = priority

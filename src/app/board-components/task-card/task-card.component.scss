@@ -1,9 +1,12 @@
-.taskCard {
-    padding: 20px 65px;
+.taskCard{
+    margin-top: 15px;
+}
+.taskContent {
     border-radius: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 15px;
 
     span {
         margin-right: 5px;

@@ -34,9 +34,13 @@ export class CategoryComponent {
   addCategory(color: any) {
     this.task.category = {
       name: this.category,
-      color: color
+      color: color,
+      id: null
     }
     console.log(this.task.category);
 
   }
+
+
+
 }

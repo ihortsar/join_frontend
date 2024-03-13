@@ -1,8 +1,12 @@
 .boardContainer {
     display:flex;
+    overflow-x: hidden;
 }
 
-.mainDiv {
+.subDiv {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    width: 25%;
     margin: 10px;
-    width: fit-content
 }

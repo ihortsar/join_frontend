@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { JoinTask } from '../../models/task.model';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,24 +10,47 @@ export class TaskService {
 
   constructor() { }
 
+
+
   allTasks: JoinTask[] = [];
+  allCategories: JoinTask["category"][] = []
   showFiller = false;
   token = localStorage.getItem('token')
+
+  allTasksSubject = new BehaviorSubject<JoinTask[]>([]);
+
+
 
 
   async loadTasks() {
     try {
-      let fetched = await this.authorizeAndFetch();
+      let fetched = await this.authorizeAndFetch('/tasks/');
       let json = await fetched.json();
       this.allTasks = json;
+      console.log(this.allTasks);
+      this.allTasksSubject.next(this.allTasks);
+
     } catch (error) {
       console.error('Error loading tasks:', error);
     }
   }
 
-  async authorizeAndFetch() {
+
+  async loadCategories() {
     try {
-      let url = environment.baseUrl + '/tasks/';
+      let fetched = await this.authorizeAndFetch('/categories/');
+      let json = await fetched.json();
+      this.allCategories = json;
+      console.log(this.allCategories);
+
+    } catch (error) {
+      console.error('Error loading categories:', error);
+    }
+  }
+
+  async authorizeAndFetch(element: string) {
+    try {
+      let url = environment.baseUrl + element;
       let response = await fetch(url, {
         method: 'GET',
         headers: new Headers({
@@ -54,6 +78,7 @@ export class TaskService {
         body: JSON.stringify(task)
       }
     )
+    this.allTasksSubject.next(this.allTasks)
     return response
   }
 
@@ -68,11 +93,36 @@ export class TaskService {
           'Authorization': `token ${this.token}`
         }),
       })
+    await this.loadTasks();
+    this.allTasksSubject.next(this.allTasks)
   }
 
 
-  async addTask(body: string) {
+  async addTask(body: any) {
+    const category = body.category
+    let categoryResponse = await this.addCategory(JSON.stringify(category))
+    let categoryJson = await categoryResponse.json()
+    body.category = categoryJson.pk
+    const task = JSON.stringify(body)
     let url = environment.baseUrl + '/tasks/';
+    let response = await fetch(url,
+      {
+        method: 'POST',
+        headers: new Headers({
+          'Authorization': `token ${this.token}`,
+          'Content-Type': 'application/json',
+        }),
+        body: task
+      })
+    console.log(response);
+    this.allTasksSubject.next(this.allTasks)
+
+  }
+
+
+  async addCategory(body: string) {
+
+    let url = environment.baseUrl + '/categories/';
     let response = await fetch(url,
       {
         method: 'POST',
@@ -82,7 +132,7 @@ export class TaskService {
         }),
         body: body
       })
-    console.log(response);
+    return response;
 
   }
 }
