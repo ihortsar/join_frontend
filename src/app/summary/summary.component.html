@@ -1,0 +1,29 @@
+<div class="summaryContainer">
+    <div class="leftSubdiv">
+        <mat-card *ngFor="let task of tasks" class="example-card">
+            <mat-card-header>
+                <mat-card-title>{{task.title}}</mat-card-title>
+                <mat-card-subtitle>{{task.tasks.length}}</mat-card-subtitle>
+            </mat-card-header>
+            <mat-card-content>
+                <!-- content here -->
+            </mat-card-content>
+        </mat-card>
+    </div>
+    <div class="rightSubdiv">
+        <mat-card class="example-card rightCard">
+            <mat-card-header>
+                <div class="dateContainer">
+                    <mat-card-title>{{today}}</mat-card-title>
+                    <div class="vertLine"></div>
+                    <mat-card-title *ngIf="ts.allTasks.length>1">{{ts.allTasks.length}} Tasks</mat-card-title>
+                    <mat-card-title *ngIf="ts.allTasks.length===1">{{ts.allTasks.length}} Task</mat-card-title>
+                </div>
+            </mat-card-header>
+        </mat-card>
+    </div>
+    <div class="welcomeContainer">
+        <h1>Welcome </h1>
+        <h2>{{getLoggedUser()}}</h2>
+    </div>
+</div>

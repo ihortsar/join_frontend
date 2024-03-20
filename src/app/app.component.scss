@@ -35,7 +35,7 @@
     flex-direction: column;
 
     a {
-        margin-bottom: 10px;
+        margin-bottom: 50px;
     }
 }
 
@@ -52,3 +52,10 @@
     margin-right: 15px;
     z-index: 200;
 }
+.logo{
+    height: 40px;
+    margin-left: 20px;
+    margin-right: 20px;
+    filter: brightness(0) saturate(100%) invert(100%) sepia(0%) saturate(0%) hue-rotate(174deg) brightness(101%) contrast(100%);
+}
+

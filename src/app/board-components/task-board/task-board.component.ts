@@ -12,7 +12,6 @@ import { MatDialog, } from '@angular/material/dialog';
 import { EditTaskComponent } from '../../edit-task/edit-task.component';
 
 import {
-  CdkDragDrop,
   moveItemInArray,
   transferArrayItem,
   CdkDrag,
@@ -20,8 +19,7 @@ import {
   DragDropModule,
   CdkDropListGroup,
 } from '@angular/cdk/drag-drop';
-import { JoinTask } from '../../../models/task.model';
-import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-task-board',
@@ -30,27 +28,24 @@ import { Subscription } from 'rxjs';
   templateUrl: './task-board.component.html',
   styleUrl: './task-board.component.scss'
 })
-export class TaskBoardComponent implements AfterViewInit {
+export class TaskBoardComponent implements OnInit {
 
-  constructor(public ts: TaskService, public dialog: MatDialog) {
+  task: any = {}
+  constructor(public ts: TaskService, public dialog: MatDialog) { }
+
+  async ngOnInit() {
+    await this.ts.loadTasks();
     this.ts.allTasksSubject.subscribe(data => {
       if (data) {
         this.ts.allTasks = data
-        this.filterTasks()
+        this.ts.filterTasks()
       }
     })
-  }
-  async ngAfterViewInit() {
-    await this.ts.loadTasks();
     await this.ts.loadCategories();
-    this.filterTasks();
-
+    this.ts.filterTasks();
   }
-  task: any = {}
-  toDo: JoinTask[] = []
-  inProgress: JoinTask[] = []
-  awaiting: JoinTask[] = []
-  done: JoinTask[] = []
+
+
 
   async drop(event: any, state: string) {
     if (event.previousContainer === event.container) {
@@ -68,7 +63,7 @@ export class TaskBoardComponent implements AfterViewInit {
       await this.ts.editTask(droppedTask.id, droppedTask)
     }
     await this.ts.loadTasks();
-    this.filterTasks();
+    this.ts.filterTasks();
   }
 
 
@@ -83,12 +78,7 @@ export class TaskBoardComponent implements AfterViewInit {
   }
 
 
-  filterTasks() {
-    this.toDo = this.ts.allTasks.filter(task => task.state === 'toDo')
-    this.inProgress = this.ts.allTasks.filter(task => task.state === 'inProgress')
-    this.awaiting = this.ts.allTasks.filter(task => task.state === 'awaiting')
-    this.done = this.ts.allTasks.filter(task => task.state === 'done')
-  }
+
 }
 
 

@@ -16,26 +16,25 @@ import { PrioritiesComponent } from '../priorities/priorities.component';
 import { JoinUser } from '../../../models/user.model';
 import { CategoryComponent } from "../category/category.component";
 import { Router } from '@angular/router';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { AssignUsersComponent } from '../assign-users/assign-users.component';
 @Component({
   selector: 'app-add-task',
   standalone: true,
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', '../../app.component.scss'],
-  imports: [NgIf, NgStyle, PrioritiesComponent, NgFor, MatCardModule, MatExpansionModule, MatIconModule, MatButtonModule, FormsModule, MatInputModule, MatFormFieldModule, HttpClientModule, ReactiveFormsModule, CategoryColorPickersComponent, CategoryComponent]
+  imports: [NgIf, NgStyle, AssignUsersComponent, PrioritiesComponent, NgFor, MatCheckboxModule, MatCardModule, MatExpansionModule, MatIconModule, MatButtonModule, FormsModule, MatInputModule, MatFormFieldModule, HttpClientModule, ReactiveFormsModule, CategoryColorPickersComponent, CategoryComponent]
 })
 export class AddTaskComponent {
-  subtasks: string[] = []
+  subtasks: { text: string, checked: boolean }[] = []
   assignedTo = []
   users: {}[] = []
   task = new JoinTask()
-  panelOpenState = false;
+
 
 
   constructor(private router: Router, public us: UsersService, public ts: TaskService) {
-    this.us.getUsers();
     this.ts.loadTasks()
-    console.log(this.ts.allTasks);
-
   }
 
 
@@ -62,23 +61,26 @@ export class AddTaskComponent {
 
 
   addSubtask() {
-    let subtask = this.addTaskForm.get('subtasks')?.value
-    if (subtask)
+    let subtask = {
+      text: this.addTaskForm.get('subtasks')?.value ?? '',
+      checked: false
+    };
+    if (subtask.text !== '') {
       this.subtasks.push(subtask);
-    this.addTaskForm.get('subtasks')?.setValue('');
+      this.addTaskForm.get('subtasks')?.setValue('');
+    }
   }
 
 
+  deleteSubtask(i: number) {
+    this.subtasks.splice(i, 1)
+  }
 
 
   addPriority(priority: any) {
     this.task.priority = priority
-    console.log(this.task.priority);
   }
 
 
-  addUser(user: JoinUser) {
-    this.task.assigned_users.push(user.username)
-    console.log(this.task.assigned_users);
-  }
+
 }

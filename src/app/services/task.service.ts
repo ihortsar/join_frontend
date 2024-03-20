@@ -16,20 +16,19 @@ export class TaskService {
   allCategories: JoinTask["category"][] = []
   showFiller = false;
   token = localStorage.getItem('token')
-
   allTasksSubject = new BehaviorSubject<JoinTask[]>([]);
-
-
-
-
+  toDo: JoinTask[] = []
+  inProgress: JoinTask[] = []
+  awaiting: JoinTask[] = []
+  done: JoinTask[] = []
+  completedSubtasks = 0
+  task: any
   async loadTasks() {
     try {
       let fetched = await this.authorizeAndFetch('/tasks/');
       let json = await fetched.json();
       this.allTasks = json;
-      console.log(this.allTasks);
       this.allTasksSubject.next(this.allTasks);
-
     } catch (error) {
       console.error('Error loading tasks:', error);
     }
@@ -41,12 +40,13 @@ export class TaskService {
       let fetched = await this.authorizeAndFetch('/categories/');
       let json = await fetched.json();
       this.allCategories = json;
-      console.log(this.allCategories);
-
+      return this.allCategories
     } catch (error) {
       console.error('Error loading categories:', error);
+      return null
     }
   }
+
 
   async authorizeAndFetch(element: string) {
     try {
@@ -84,17 +84,23 @@ export class TaskService {
 
 
   async deleteTask(id: number) {
-    let url = environment.baseUrl + '/tasks/' + `${id}/`;
-    let response = await fetch(url,
-      {
-        method: 'DELETE',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': `token ${this.token}`
-        }),
-      })
-    await this.loadTasks();
-    this.allTasksSubject.next(this.allTasks)
+    try {
+      let url = environment.baseUrl + '/tasks/' + `${id}/`;
+      let response = await fetch(url,
+        {
+          method: 'DELETE',
+          headers: new Headers({
+            'Content-Type': 'application/json',
+            'Authorization': `token ${this.token}`
+          }),
+        })
+      const taskIndex = this.allTasks.findIndex(task => task.id === id);
+      this.allTasks.splice(taskIndex, 1)
+      this.allTasksSubject.next(this.allTasks)
+    } catch (er) {
+      console.log(er);
+
+    }
   }
 
 
@@ -114,14 +120,12 @@ export class TaskService {
         }),
         body: task
       })
-    console.log(response);
     this.allTasksSubject.next(this.allTasks)
 
   }
 
 
   async addCategory(body: string) {
-
     let url = environment.baseUrl + '/categories/';
     let response = await fetch(url,
       {
@@ -134,5 +138,26 @@ export class TaskService {
       })
     return response;
 
+  }
+
+
+  filterTasks() {
+    this.toDo = this.allTasks.filter(task => task.state === 'toDo')
+    this.inProgress = this.allTasks.filter(task => task.state === 'inProgress')
+    this.awaiting = this.allTasks.filter(task => task.state === 'awaiting')
+    this.done = this.allTasks.filter(task => task.state === 'done')
+  }
+
+
+  countCompletedSubtasks() {
+    this.completedSubtasks = 0;
+    this.task.subtasks.forEach((subtask: any) => {
+      if (subtask.checked) {
+        this.completedSubtasks++;
+        this.task.completed = (this.completedSubtasks / this.task.subtasks.length) * 100
+      } else {
+        this.task.completed = (this.completedSubtasks / this.task.subtasks.length) * 100
+      }
+    })
   }
 }

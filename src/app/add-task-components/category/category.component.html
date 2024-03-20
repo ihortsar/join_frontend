@@ -1,24 +1,43 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!newCategory">
-    <mat-expansion-panel-header>
+<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!newCategory && !categoryCreated">
+
+    <mat-expansion-panel-header class="category">
         <mat-panel-description>
             Category:
         </mat-panel-description>
     </mat-expansion-panel-header>
     <span class="newCat" (click)="toggleNewCategory()">New category</span>
-    <div *ngIf="ts.allTasks.length > 0">
-        <div *ngFor="let task of ts.allTasks" class="catDiv">
-            <span>{{task.category.name}}</span>
-            <div [ngStyle]="{'background-color': task.category.color}" class="categoryColorDiv">
+    <div *ngIf="existingCategories && existingCategories.length > 0">
+        <div *ngFor="let category of existingCategories" class="catDiv">
+            <span (click)="addExistingCategory(category)">{{category.name}}</span>
+            <div [ngStyle]="{'background-color': category.color}" class="categoryColorDiv">
             </div>
         </div>
     </div>
 </mat-expansion-panel>
-<div class="newCategoryDiv" *ngIf="newCategory">
+<div class="newCategoryDiv" *ngIf="newCategory && !categoryCreated">
     <mat-form-field class="form-field">
-        <mat-label>Add category</mat-label>
-        <input [(ngModel)]="category" type="text" name="category" matInput>
+        <mat-label *ngIf="!categoryExists">Add category</mat-label>
+        <mat-label *ngIf="categoryExists" [ngClass]="{'red-input': categoryExists}">Category with this name
+            exists</mat-label>
+        <div class="inputDiv">
+            <input [(ngModel)]="category" (ngModelChange)="checkIfCategoryExists()" type="text" name="category"
+                matInput>
+            <span class="material-symbols-outlined" (click)="toggleNewCategory()">
+                close
+            </span>
+        </div>
         <div class="colorPicker" *ngIf="task && task.category" [ngStyle]="{'background-color': task.category.color}">
         </div>
     </mat-form-field>
-    <app-category-color-pickers *ngIf="newCategory" (addColor)="addCategory($event)"></app-category-color-pickers>
+    <app-category-color-pickers *ngIf="newCategory&&!categoryExists"
+        (addColor)="addCategory($event)"></app-category-color-pickers>
+</div>
+<div *ngIf="categoryCreated" class="createdCategory">
+    <div>
+        <span>{{task.category.name}}</span>
+        <div [ngStyle]="{'background-color': task.category.color}" class="colorPicker"></div>
+    </div>
+    <span class="material-symbols-outlined" (click)="deleteCategory()">
+        close
+    </span>
 </div>

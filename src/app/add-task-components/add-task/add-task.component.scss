@@ -38,10 +38,20 @@
     }
 }
 
-
-
 .addedSubtasks {
     display: flex;
     flex-direction: column;
 }
 
+.assigned {
+    margin-top: 2px;
+
+    .assignedHeader {
+        height: 56px;
+    }
+}
+
+.categoryContainer {
+    margin-top: -1px;
+    position: relative
+}

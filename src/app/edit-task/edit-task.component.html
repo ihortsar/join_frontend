@@ -1,19 +1,32 @@
 <mat-dialog-content class="dialog">
     <h2 mat-dialog-title>Edit Task</h2>
     <form [formGroup]="editTaskForm" class="example-form" (submit)="saveEditedTask()">
+
         <mat-form-field class="example-full-width">
             <mat-label>Title</mat-label>
             <input formControlName="title" matInput value="{{task.title}}" name="title">
         </mat-form-field>
+
         <mat-form-field class="example-full-width">
             <label>Description</label>
             <input formControlName="description" matInput value="{{task.description}}" name="description">
         </mat-form-field>
-        <mat-form-field class="example-full-width">
-            <label>Created at</label>
-            <input matInput value="{{ task.created_at | date }}">
-        </mat-form-field>
+
+        <app-priorities [task]="task"></app-priorities>
+
+        <div *ngIf=" task.subtasks.length>0" class="subtasks">
+            <h4>Subtasks:</h4>
+            <section class="example-section" [formGroup]="subtaskCheckedForm">
+                <div *ngFor="let subtask of task.subtasks; let i=index">
+                    <p><mat-checkbox (click)="checkSubtask(subtask,i)" [formControlName]="'checked' + i">{{ subtask.text
+                            }}
+                        </mat-checkbox>
+                    </p>
+                </div>
+            </section>
+        </div>
     </form>
+
 </mat-dialog-content>
 <mat-dialog-actions class="buttons">
     <div>

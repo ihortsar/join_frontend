@@ -8,6 +8,7 @@ import { environment } from '../../../../environments/environment';
 import { Router } from '@angular/router';
 import { lastValueFrom } from 'rxjs';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { UsersService } from '../../services/users.service';
 
 
 
@@ -20,30 +21,11 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  username = ''
-  password = ''
 
-  constructor(private router: Router, private http: HttpClient) { }
- 
-  async login() {
-    try {
-      let resp: any = await this.loginWithUsernameAndPassword(this.username, this.password);
-      localStorage.setItem('token', resp['token']);
-      this.router.navigateByUrl('/task_board');
-    } catch (e) {
-      alert('Login fehlgeschlagen!');
-    }
-  }
 
-  loginWithUsernameAndPassword(username: string, password: string) {
-    const url = environment.baseUrl + '/login/'
-    const body = {
-      username: username,
-      password: password,
-    };
+  constructor(public us: UsersService) { }
 
-    return lastValueFrom(this.http.post(url, body));
-  }
+
 }
 
 

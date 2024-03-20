@@ -1,12 +1,11 @@
-
-<form class="form" (ngSubmit)="login()">
+<form class="form" (ngSubmit)="us.login()">
     <mat-form-field class="form-field">
         <mat-label>Username</mat-label>
-        <input type="text" name="username" [(ngModel)]="username" matInput>
+        <input type="text" name="username" [(ngModel)]="us.username" matInput>
     </mat-form-field>
     <mat-form-field class="form-field">
         <mat-label>Password</mat-label>
-        <input type="password" name="password" [(ngModel)]="password" matInput>
+        <input type="password" name="password" [(ngModel)]="us.password" matInput>
     </mat-form-field>
     <button mat-raised-button color="primary">Log in</button>
 </form>

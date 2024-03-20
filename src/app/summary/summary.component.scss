@@ -1,0 +1,54 @@
+.summaryContainer {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 40px;
+}
+
+.leftSubdiv {
+    margin-left: 10%;
+}
+
+.rightSubdiv {
+    width: fit-content;
+    margin-left: 50px;
+
+}
+
+.example-card {
+    width: 100%;
+    margin: 20px
+}
+
+.rightCard {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.dateContainer {
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    text-align: center;
+
+    mat-card-title {
+        padding: 10px;
+    }
+
+    .vertLine {
+        height: 80%;
+        width: 2px;
+        background-color: gray;
+    }
+}
+
+.welcomeContainer {
+    margin-left: 40px;
+
+    h2 {
+        color: #d2c4c4;
+    }
+}

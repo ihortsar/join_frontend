@@ -13,22 +13,11 @@
             </mat-form-field>
 
 
-            <div style="position: relative;">
+            <div class="categoryContainer;">
                 <app-category [task]="task"></app-category>
             </div>
 
-
-
-            <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-                <mat-expansion-panel-header>
-                    <mat-panel-description>
-                        Assigned to:
-                    </mat-panel-description>
-                </mat-expansion-panel-header>
-                <div class="users">
-                    <p (click)="addUser(user)" *ngFor="let user of us.allUsers">{{user.username}}</p>
-                </div>
-            </mat-expansion-panel>
+            <app-assign-users [task]="task"></app-assign-users>
         </div>
 
 
@@ -48,13 +37,17 @@
                         add
                     </span>
                 </div>
-                <div class="addedSubtasks">
-                    <span *ngFor="let subtask of subtasks">{{subtask}}</span>
+                <div class="addedSubtasks" *ngFor="let subtask of subtasks; let i=index">
+                    <span>{{subtask.text}}</span>
+                    <span class="material-symbols-outlined" (click)="deleteSubtask(i)">
+                        close
+                    </span>
                 </div>
             </mat-form-field>
 
-            <button mat-raised-button color="primary" [disabled]="!addTaskForm.valid || !task.category.name || task.category.name.trim() === ''">Add
-                task</button>
+            <button mat-raised-button color="primary"
+                [disabled]="!addTaskForm.valid || !task.category.name || task.category.name.trim() === ''">
+                Add task</button>
         </div>
 
     </form>

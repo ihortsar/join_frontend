@@ -1,6 +1,7 @@
 .categoryWidth {
     width: 100%
 }
+
 .catDiv {
     display: flex;
     align-items: center;
@@ -25,9 +26,27 @@
     top: 0;
     bottom: 0;
 }
-.newCategoryDiv{
-    
+
+.red-input {
+    color: red;
 }
+
 .form-field {
     width: 100%;
+}
+
+.inputDiv {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.createdCategory {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.category {
+    height: 56px;
 }

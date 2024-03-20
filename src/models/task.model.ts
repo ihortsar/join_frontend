@@ -1,4 +1,5 @@
 interface Task {
+    id: number
     title: string,
     description: string,
     category: {
@@ -9,8 +10,13 @@ interface Task {
     assigned_users: {}[],
     due_date: string,
     priority: string,
-    subtasks: [],
+    subtasks: {}[],
     state: string,
+}
+
+export interface Subtask {
+    text: string;
+    checked: boolean;
 }
 
 export class JoinTask {
@@ -24,10 +30,11 @@ export class JoinTask {
     assigned_users: {}[]
     due_date: string
     priority: string
-    subtasks: string[]
+    subtasks: {}[]
     state: string
-
+    id: number
     constructor(data?: Task) {
+        this.id = data?.id || -1;
         this.title = data?.title || '';
         this.description = data?.description || '';
         this.category = data?.category || {

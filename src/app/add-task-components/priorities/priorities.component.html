@@ -1,12 +1,11 @@
 <div class="urgencies">
-    <mat-card (click)="addPriority('low')" class="urgency">
+    <mat-card (click)="handlePriority('low')" id="low"  [style.background-color]="selectedPriority === 'low' ? getBackgroundColor('low') : 'transparent'" class="urgency">
         <mat-card-content>Low</mat-card-content>
     </mat-card>
-    <mat-card (click)="addPriority('middle')" class="urgency">
+    <mat-card (click)="handlePriority('middle')" id="middle"  [style.background-color]="selectedPriority === 'middle' ? getBackgroundColor('middle') : 'transparent'" class="urgency">
         <mat-card-content> Middle</mat-card-content>
     </mat-card>
-    <mat-card (click)="addPriority('urgent')" class="urgency">
+    <mat-card (click)="handlePriority('urgent')" id="urgent" [style.background-color]="selectedPriority === 'urgent' ? getBackgroundColor('urgent') : 'transparent'" class="urgency">
         <mat-card-content> Urgent</mat-card-content>
     </mat-card>
 </div>
-

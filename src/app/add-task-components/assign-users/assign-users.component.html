@@ -1,0 +1,13 @@
+<mat-expansion-panel class="assigned" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+    <mat-expansion-panel-header class="assignedHeader">
+        <mat-panel-description>
+            Assigned to:
+        </mat-panel-description>
+    </mat-expansion-panel-header>
+    <section class="example-section" [formGroup]="usersCheckedForm">
+        <div class="users" *ngFor="let user of us.allUsers; let i=index">
+            <mat-checkbox (click)="addUser(user,i)" [formControlName]="'checked' + i">{{user.username}}
+            </mat-checkbox>
+        </div>
+    </section>
+</mat-expansion-panel>

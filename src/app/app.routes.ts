@@ -5,6 +5,7 @@ import { AddTaskComponent } from './add-task-components/add-task/add-task.compon
 import { EditTaskComponent } from './edit-task/edit-task.component';
 import { SignupComponent } from './auth-components/signup/signup.component';
 import { AuthGuard } from './auth.guard';
+import { SummaryComponent } from './summary/summary.component';
 
 
 
@@ -13,7 +14,8 @@ export const routes: Routes = [
     { path: '', component: LoginComponent },
     { path: 'login', component: LoginComponent },
     { path: 'task_board', component: TaskBoardComponent, canActivate: [AuthGuard] },
-    { path: 'newtask', component: AddTaskComponent },
-    { path: 'edit', component: EditTaskComponent },
+    { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard] },
+    { path: 'newtask', component: AddTaskComponent, canActivate: [AuthGuard] },
+    { path: 'edit', component: EditTaskComponent, canActivate: [AuthGuard] },
     { path: 'signup', component: SignupComponent },
 ];
