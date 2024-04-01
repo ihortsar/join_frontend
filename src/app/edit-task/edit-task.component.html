@@ -1,7 +1,7 @@
 <mat-dialog-content class="dialog">
-    <h2 mat-dialog-title>Edit Task</h2>
-    <form [formGroup]="editTaskForm" class="example-form" (submit)="saveEditedTask()">
 
+    <form [formGroup]="editTaskForm" class="example-form" (submit)="saveEditedTask()">
+        <h2 mat-dialog-title>Edit Task</h2>
         <mat-form-field class="example-full-width">
             <mat-label>Title</mat-label>
             <input formControlName="title" matInput value="{{task.title}}" name="title">
@@ -12,19 +12,36 @@
             <input formControlName="description" matInput value="{{task.description}}" name="description">
         </mat-form-field>
 
-        <app-priorities [task]="task"></app-priorities>
+        <app-priorities [task]="task" (priorityEmitter)="addPriority($event)"></app-priorities>
+
+        <section class="users-container" [formGroup]="usersCheckedForm">
+            <h4>Assigned to:</h4>
+            <div *ngFor="let user of us.allUsers; let i=index">
+                <mat-checkbox (click)="userForm.addDeleteUser(user,i,usersCheckedForm,'checked' + i )"
+                    [formControlName]="'checked' + i">
+                    <div  class="relative"> 
+                        <span class="displayUsersInfo">{{user.username}}</span>
+                        <app-user-info class="userInfo" [user]="user"></app-user-info>
+                    </div>
+                </mat-checkbox>
+            </div>
+        </section>
+
+
 
         <div *ngIf=" task.subtasks.length>0" class="subtasks">
             <h4>Subtasks:</h4>
             <section class="example-section" [formGroup]="subtaskCheckedForm">
                 <div *ngFor="let subtask of task.subtasks; let i=index">
-                    <p><mat-checkbox (click)="checkSubtask(subtask,i)" [formControlName]="'checked' + i">{{ subtask.text
+                    <p><mat-checkbox (click)="checkSubtask(subtask,i)" [formControlName]="'checkedSubtasks' + i">{{
+                            subtask.text
                             }}
                         </mat-checkbox>
                     </p>
                 </div>
             </section>
         </div>
+
     </form>
 
 </mat-dialog-content>
@@ -33,5 +50,5 @@
         <button mat-button mat-dialog-close>Cancel</button>
         <button mat-button mat-dialog-close cdkFocusInitial (click)="saveEditedTask()">Save</button>
     </div>
-    <button mat-raised-button color="warn" (click)="ts.deleteTask(task.id )">Delete</button>
+    <button mat-raised-button mat-dialog-close color="warn" (click)="ts.deleteTask(task.id )">Delete</button>
 </mat-dialog-actions>

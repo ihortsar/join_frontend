@@ -1,7 +1,6 @@
 <div class="addTaskContainer">
     <form [formGroup]="addTaskForm" class="form" (ngSubmit)="addTask()">
-        <div class="subForm">
-
+        <div class="subdiv">
             <mat-form-field class="form-field">
                 <mat-label>Title</mat-label>
                 <input type="text" formControlName="title" matInput>
@@ -12,17 +11,13 @@
                 <input type="text" formControlName="description" matInput>
             </mat-form-field>
 
-
-            <div class="categoryContainer;">
-                <app-category [task]="task"></app-category>
-            </div>
+            <app-category [task]="task"></app-category>
 
             <app-assign-users [task]="task"></app-assign-users>
+
         </div>
-
-
-        <div class="subForm">
-            <mat-form-field class="form-field">
+        <div class="subdiv">
+            <mat-form-field class="form-field" class="date">
                 <mat-label>Due date</mat-label>
                 <input formControlName="date" type="date" name="description" matInput>
             </mat-form-field>
@@ -45,10 +40,10 @@
                 </div>
             </mat-form-field>
 
-            <button mat-raised-button color="primary"
-                [disabled]="!addTaskForm.valid || !task.category.name || task.category.name.trim() === ''">
+            <button class="addButton" mat-raised-button color="primary"
+                [disabled]="!this.task.priority || !addTaskForm.valid || !task.category.name || 
+                task.category.name.trim() === ''">
                 Add task</button>
         </div>
-
     </form>
 </div>

@@ -11,7 +11,16 @@ body {
   font-style: normal !important;
   font-weight: 600 !important;
 }
-
+.mat-mdc-dialog-surface.mdc-dialog__surface {
+  overflow-y: hidden;
+}
+app-summary {
+  display: flex;
+  height: 100%;
+}
+.no-overflow-y {
+  overflow-y: hidden;
+}
 ::-webkit-scrollbar {
   width: 10px;
 }

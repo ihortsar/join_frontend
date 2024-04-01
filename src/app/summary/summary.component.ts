@@ -24,6 +24,11 @@ export class SummaryComponent implements OnInit {
   };
   today: string | undefined;
 
+  /**
+   * Initializes the component with task details.
+   * Sets up options for date formatting and retrieves tasks.
+   * Called when the component is initialized.
+   */
   async ngOnInit() {
     this.today = new Date().toLocaleDateString('en-US', this.options);
     await this.ts.loadTasks()
@@ -35,11 +40,14 @@ export class SummaryComponent implements OnInit {
       { title: 'Done', tasks: this.ts.done }]
   }
 
+
+  /**
+ * Retrieves the username of the logged-in user.
+ * @returns The username of the logged-in user
+ */
   getLoggedUser() {
-    const loggedUser = localStorage.getItem('loggedUser')
-    return loggedUser
+    const loggedUser = JSON.parse(localStorage.getItem('loggedUser') || '{}');
+    return loggedUser.username
   }
-
-
 
 }

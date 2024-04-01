@@ -1,4 +1,23 @@
-.mat-expansion-panel-body {
-    height: 120px !important;
-    overflow-y: auto !important;
-  }
+.assigned {
+    z-index: 20;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    display: flex !important;
+}
+
+.assignedHeader {
+    height: 56px !important
+}
+
+span.mat-content {
+    height: 100%;
+}
+
+
+@media((min-width:2400px) and (max-width:4000px)) {
+    label.mdc-label {
+        font-size: 26px;
+    }
+}

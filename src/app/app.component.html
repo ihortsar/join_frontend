@@ -4,27 +4,39 @@
     <mat-icon>menu</mat-icon>
   </button>
   <img class="logo" src="./assets/img/blue-logo-small.png">
-  <span *ngIf="router.url==='/task_board'">Task Board</span>
-  <span *ngIf="router.url==='/newtask'">Add a Task</span>
-  <span *ngIf="router.url==='/summary'">Summary</span>
+  <span class="header" *ngIf="router.url==='/task_board'">Task Board</span>
+  <span class="header" *ngIf="router.url==='/newtask'">Add a Task</span>
+  <span class="header" *ngIf="router.url==='/summary'">Summary</span>
+  <span class="header" *ngIf="router.url==='/legal_notice'">Legal notice</span>
   <span class="example-spacer"></span>
   <button mat-raised-button color="primary" *ngIf="router.url==='/login' || router.url==='/'" [routerLink]="['/signup']"
     routerLinkActive="active">Sign up</button>
   <button mat-raised-button color="primary" *ngIf="router.url==='/signup'" [routerLink]="['/login']"
     routerLinkActive="active">Log in</button>
-  <button mat-raised-button color="primary"
-    *ngIf="router.url !=='/signup' && router.url !== '/login'&& router.url !== '/'" (click)="logOut()">Log
-    out</button>
+
+  <div class="profileAndLogout" *ngIf="router.url !=='/signup' && router.url !== '/login'&& router.url !== '/'">
+    <div class="profileIcon" (click)="openDialog('0ms', '0ms' )">
+      {{us.returnLoggedUser().first_name[0]}}{{us.returnLoggedUser().last_name[0]}}</div>
+    <button mat-raised-button color="primary" (click)="logout()">Log
+      out</button>
+  </div>
+
 </mat-toolbar>
 <mat-drawer-container class="example-container" [ngClass]="calculateRouter()" autosize>
 
 
-  <mat-drawer #drawer class="example-sidenav" mode="side">
+  <mat-drawer #drawer class="example-sidenav navContainer" mode="side">
     <div class="sideNavDiv">
-      <a class="hrefs" href="/newtask">Add a task</a>
-      <a class="hrefs" href="/task_board">Board</a>
-      <a class="hrefs" href="/summary">Summary</a>
+      <a [ngStyle]="{'background-color': router.url === '/newtask' ? 'rgb(84 84 84)' : ''}" class="hrefs" href="/newtask">Add
+        a
+        task</a>
+      <a [ngStyle]="{'background-color': router.url === '/task_board' ? 'rgb(84 84 84)' : ''}" class="hrefs"
+        href="/task_board">Board</a>
+      <a [ngStyle]="{'background-color': router.url === '/summary' ? 'rgb(84 84 84)' : ''}" class="hrefs"
+        href="/summary">Summary</a>
     </div>
+    <a [ngStyle]="{'background-color': router.url === '/legal_notice' ? 'rgb(84 84 84)' : ''}" class="notice"
+      href="/legal_notice">Legal notice</a>
   </mat-drawer>
   <router-outlet>
   </router-outlet>

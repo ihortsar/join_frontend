@@ -1,5 +1,5 @@
 .boardContainer {
-    display:flex;
+    display: flex;
     overflow-x: hidden;
 }
 
@@ -9,4 +9,16 @@
     text-align: center;
     width: 25%;
     margin: 10px;
+}
+
+@media(max-width:900px) {
+    .boardContainer {
+        flex-direction: column;
+    }
+
+    .subDiv {
+        width: 80%;
+        margin-left: auto;
+        margin-right: auto;
+    }
 }

@@ -1,20 +1,37 @@
 .form {
-
-    height: 85vh;
     overflow-y: hidden;
     display: flex;
-    justify-content: center;
-    width: 100%;
-    gap: 60px;
+    width: 90%;
+    gap: 50px;
+    justify-items: center;
+    height: 75%;
+}
 
-    .subForm {
-        display: flex;
-        flex-direction: column;
-        gap: 40px;
-        min-width: 40%;
-    }
+.mat-mdc-form-field-subscript-wrapper.mat-mdc-form-field-bottom-align {
+    display: none;
+}
+
+.subdiv {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.form>* {
+    width: 95%;
+}
 
 
+
+app-priorities {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+}
+
+app-category {
+    position: relative;
 }
 
 .addTaskContainer {
@@ -23,11 +40,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-
-.subtasks {
-    margin-top: 20px;
 }
 
 .subtaskAndPlus {
@@ -40,18 +52,49 @@
 
 .addedSubtasks {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
 }
 
-.assigned {
-    margin-top: 2px;
+.addButton {
+    height: 56px;
+}
 
-    .assignedHeader {
-        height: 56px;
+@media((min-width:2400px) and (max-width:4000px)) {
+    input {
+        font-size: 30px !important;
+    }
+
+    .subdiv>* {
+        min-height: 165px;
+        font-size: 30px;
+        display: flex;
+        align-items: center;
+    }
+
+    mat-label {
+        font-size: 30px;
+    }
+
+    .mat-mdc-text-field-wrapper.mdc-text-field.mdc-text-field--filled {
+        align-items: center;
     }
 }
 
-.categoryContainer {
-    margin-top: -1px;
-    position: relative
+@media(max-width:800px) {
+    form {
+        flex-direction: column;
+        height: 90% !important;
+        overflow-y: auto !important;
+        gap: 20px !important;
+
+        .subdiv {
+            gap: 20px
+        }
+
+        .subtasks {
+            margin-top: 0px;
+        }
+    }
+
+
 }

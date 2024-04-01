@@ -1,28 +1,22 @@
 <div class="summaryContainer">
-    <div class="leftSubdiv">
+    <div class="leftSubDiv">
         <mat-card *ngFor="let task of tasks" class="example-card">
-            <mat-card-header>
-                <mat-card-title>{{task.title}}</mat-card-title>
-                <mat-card-subtitle>{{task.tasks.length}}</mat-card-subtitle>
-            </mat-card-header>
             <mat-card-content>
-                <!-- content here -->
+                <p>{{task.title}}</p>
+                <p>{{task.tasks.length}}</p>
             </mat-card-content>
         </mat-card>
     </div>
-    <div class="rightSubdiv">
-        <mat-card class="example-card rightCard">
-            <mat-card-header>
-                <div class="dateContainer">
-                    <mat-card-title>{{today}}</mat-card-title>
-                    <div class="vertLine"></div>
-                    <mat-card-title *ngIf="ts.allTasks.length>1">{{ts.allTasks.length}} Tasks</mat-card-title>
-                    <mat-card-title *ngIf="ts.allTasks.length===1">{{ts.allTasks.length}} Task</mat-card-title>
-                </div>
-            </mat-card-header>
-        </mat-card>
-    </div>
-    <div class="welcomeContainer">
+
+    <mat-card class="dateCard">
+        <p>{{today}}</p>
+        <div class="taskNumber">
+            <p *ngIf="ts.allTasks.length>1">{{ts.allTasks.length}} Tasks</p>
+            <p *ngIf="ts.allTasks.length===1">{{ts.allTasks.length}} Task</p>
+        </div>
+    </mat-card>
+
+    <div class="welcomeContainer welcomeGreeting">
         <h1>Welcome </h1>
         <h2>{{getLoggedUser()}}</h2>
     </div>

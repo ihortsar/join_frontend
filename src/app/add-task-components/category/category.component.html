@@ -1,4 +1,5 @@
-<mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false" *ngIf="!newCategory && !categoryCreated">
+<mat-expansion-panel class="categoryWidth" (opened)="panelOpenState = true" (closed)="panelOpenState = false"
+    *ngIf="!newCategory && !categoryCreated">
 
     <mat-expansion-panel-header class="category">
         <mat-panel-description>
@@ -7,8 +8,8 @@
     </mat-expansion-panel-header>
     <span class="newCat" (click)="toggleNewCategory()">New category</span>
     <div *ngIf="existingCategories && existingCategories.length > 0">
-        <div *ngFor="let category of existingCategories" class="catDiv">
-            <span (click)="addExistingCategory(category)">{{category.name}}</span>
+        <div *ngFor="let category of existingCategories" (click)="addExistingCategory(category)" class="catDiv">
+            <span>{{category.name}}</span>
             <div [ngStyle]="{'background-color': category.color}" class="categoryColorDiv">
             </div>
         </div>
@@ -26,12 +27,13 @@
                 close
             </span>
         </div>
-        <div class="colorPicker" *ngIf="task && task.category" [ngStyle]="{'background-color': task.category.color}">
-        </div>
+      <!--   <div class="colorPicker" *ngIf="task && task.category" [ngStyle]="{'background-color': task.category.color}">
+        </div> -->
     </mat-form-field>
     <app-category-color-pickers *ngIf="newCategory&&!categoryExists"
         (addColor)="addCategory($event)"></app-category-color-pickers>
 </div>
+
 <div *ngIf="categoryCreated" class="createdCategory">
     <div>
         <span>{{task.category.name}}</span>

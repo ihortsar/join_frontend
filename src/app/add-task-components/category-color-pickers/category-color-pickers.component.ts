@@ -14,7 +14,10 @@ export class CategoryColorPickersComponent {
   categoryColor = ''
   @Output() addColor = new EventEmitter<any>()
 
-
+/**
+ * Emits an event to add a color to the task.
+ * @param value The color value to be added to the task
+ */
   addCategoryColorOnTask(value: string) {
     this.addColor.emit(value)
   }

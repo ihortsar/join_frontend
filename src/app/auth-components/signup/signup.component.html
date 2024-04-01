@@ -1,7 +1,17 @@
 <form [formGroup]="signUpForm" class="form" (ngSubmit)="createUser()">
     <mat-form-field class="form-field">
-        <mat-label>Username</mat-label>
+        <mat-label *ngIf="!usernameExists">Username</mat-label>
+        <mat-label *ngIf="usernameExists" class="warn">User with this username exists</mat-label>
         <input type="text" formControlName="username" matInput>
+    </mat-form-field>
+
+    <mat-form-field class="form-field">
+        <mat-label>First name</mat-label>
+        <input type="text" formControlName="firstName" matInput>
+    </mat-form-field>
+    <mat-form-field class="form-field">
+        <mat-label>Last name</mat-label>
+        <input type="text" formControlName="lastName" matInput>
     </mat-form-field>
     <mat-form-field class="form-field">
         <mat-label>Email</mat-label>

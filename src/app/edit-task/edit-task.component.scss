@@ -1,21 +1,46 @@
 .example-form {
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    flex-grow: 1;
+}
 
-
+.example-form>* {
+    margin-bottom: 10px;
 }
 
 .example-full-width {
     display: flex;
     flex-direction: column;
 }
-.buttons{
+
+.buttons {
     display: flex;
     justify-content: space-between;
     padding: 0 24px;
+    flex-grow: 1;
 }
-.subtasks{
+
+.subtasks {
+    display: flex;
+    flex-direction: column;
+}
+
+.userInfo {
+    display: none;
+    z-index: 5;
+    background-color: #424242;
+    border: 1px solid black;
+    padding: 10px;
+    position: absolute;
+    bottom: 25px;
+}
+
+.relative {
+    position: relative !important;
+}
+
+.displayUsersInfo:hover+.userInfo {
+  
     display: flex;
     flex-direction: column;
 }

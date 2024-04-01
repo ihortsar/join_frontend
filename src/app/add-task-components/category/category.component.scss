@@ -1,12 +1,36 @@
 .categoryWidth {
-    width: 100%
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    display: flex;
+    height: 100%;
+}
+
+.newCategoryDiv {
+    width: 100%;
+    height: 100%;
+}
+
+mat-expansion-panel {
+    z-index: 20;
+}
+
+app-category-color-pickers {
+    position: absolute;
+    bottom: -18px;
+    left: 0
+}
+
+button {
+    cursor: pointer;
 }
 
 .catDiv {
     display: flex;
     align-items: center;
-    margin-top: 15px;
+    margin-top: 30px;
     gap: 10px;
+    cursor: pointer;
 
     .categoryColorDiv {
         height: 15px;
@@ -16,7 +40,10 @@
 }
 
 .newCat {
-    margin-top: 15px;
+    display: block;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    cursor: pointer;
 }
 
 .inputContainer {
@@ -32,6 +59,7 @@
 }
 
 .form-field {
+    height: 100%;
     width: 100%;
 }
 
@@ -39,14 +67,44 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-top: -5px;
 }
 
 .createdCategory {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-around;
+    font-size: 20px;
+    min-height: 56px;
+    position: relative;
+    div {
+        display: flex;
+        align-items: center;
+
+        div {
+            margin-left: 10px;
+        }
+    }
 }
 
 .category {
-    height: 56px;
+    height: 56px !important;
+}
+
+mat-content {
+    height: 100%;
+}
+
+@media((min-width:2400px) and (max-width:4000px)) {
+    .createdCategory {
+        font-size: 30px !important;
+    }
+
+    .newCat {
+        font-size: 26px;
+    }
+
+    .catDiv {
+        font-size: 26px;
+    }
 }

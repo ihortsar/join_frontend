@@ -6,6 +6,7 @@ import { EditTaskComponent } from './edit-task/edit-task.component';
 import { SignupComponent } from './auth-components/signup/signup.component';
 import { AuthGuard } from './auth.guard';
 import { SummaryComponent } from './summary/summary.component';
+import { LegalNoticeComponent } from './legal-notice/legal-notice.component';
 
 
 
@@ -17,5 +18,6 @@ export const routes: Routes = [
     { path: 'summary', component: SummaryComponent, canActivate: [AuthGuard] },
     { path: 'newtask', component: AddTaskComponent, canActivate: [AuthGuard] },
     { path: 'edit', component: EditTaskComponent, canActivate: [AuthGuard] },
+    { path: 'legal_notice', component: LegalNoticeComponent, canActivate: [AuthGuard] },
     { path: 'signup', component: SignupComponent },
 ];

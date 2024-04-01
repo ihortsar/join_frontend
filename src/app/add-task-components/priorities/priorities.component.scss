@@ -1,14 +1,19 @@
 .urgencies {
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-between;
     width: 100%;
-    padding: 3px;
+    align-items: center;
+    height: 80%;
 }
 
 .urgency {
     border-radius: 20px;
     width: 30%;
     text-align: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .bgGreen {

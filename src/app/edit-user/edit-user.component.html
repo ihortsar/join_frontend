@@ -1,0 +1,9 @@
+<div *ngIf="!delete" class="container">
+    <p>{{user.first_name}} {{user.last_name}}</p>
+    <p>{{user.email}}</p>
+</div>
+<div *ngIf="delete" class="container">
+    <p>Are you sure you want to delete your account?</p>
+</div>
+<button *ngIf="!delete" mat-raised-button color="warn" (click)="tryDeleteAccount()">Delete account</button>
+<button *ngIf="delete" mat-raised-button color="warn" (click)="deleteAccount()">Yes, I'm sure</button>

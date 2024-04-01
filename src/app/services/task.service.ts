@@ -7,15 +7,9 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class TaskService {
-
-  constructor() { }
-
-
-
   allTasks: JoinTask[] = [];
   allCategories: JoinTask["category"][] = []
   showFiller = false;
-  token = localStorage.getItem('token')
   allTasksSubject = new BehaviorSubject<JoinTask[]>([]);
   toDo: JoinTask[] = []
   inProgress: JoinTask[] = []
@@ -23,9 +17,11 @@ export class TaskService {
   done: JoinTask[] = []
   completedSubtasks = 0
   task: any
+
+
   async loadTasks() {
     try {
-      let fetched = await this.authorizeAndFetch('/tasks/');
+      let fetched = await this.authorizeAndFetch('/tasks/', 'GET', undefined);
       let json = await fetched.json();
       this.allTasks = json;
       this.allTasksSubject.next(this.allTasks);
@@ -37,7 +33,7 @@ export class TaskService {
 
   async loadCategories() {
     try {
-      let fetched = await this.authorizeAndFetch('/categories/');
+      let fetched = await this.authorizeAndFetch('/categories/', 'GET', undefined);
       let json = await fetched.json();
       this.allCategories = json;
       return this.allCategories
@@ -48,15 +44,18 @@ export class TaskService {
   }
 
 
-  async authorizeAndFetch(element: string) {
+  async authorizeAndFetch(element: string, method: string, body: any) {
     try {
       let url = environment.baseUrl + element;
-      let response = await fetch(url, {
-        method: 'GET',
-        headers: new Headers({
-          'Authorization': `token ${this.token}`
+      let response = await fetch(url,
+        {
+          method: method,
+          headers: new Headers({
+            'Authorization': `token ${localStorage.getItem('token')}`,
+            'Content-Type': 'application/json',
+          }),
+          body: body ? JSON.stringify(body) : undefined
         })
-      });
       return response;
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -65,19 +64,9 @@ export class TaskService {
   }
 
 
-
   async editTask(id: number, task: {}) {
-    let url = environment.baseUrl + '/tasks/' + `${id}/`;
-    let response = await fetch(url,
-      {
-        method: 'PUT',
-        headers: new Headers({
-          'Content-Type': 'application/json',
-          'Authorization': `token ${this.token}`
-        }),
-        body: JSON.stringify(task)
-      }
-    )
+    let url = '/tasks/' + `${id}/`;
+    let response = await this.authorizeAndFetch(url, 'PUT', task);
     this.allTasksSubject.next(this.allTasks)
     return response
   }
@@ -85,59 +74,31 @@ export class TaskService {
 
   async deleteTask(id: number) {
     try {
-      let url = environment.baseUrl + '/tasks/' + `${id}/`;
-      let response = await fetch(url,
-        {
-          method: 'DELETE',
-          headers: new Headers({
-            'Content-Type': 'application/json',
-            'Authorization': `token ${this.token}`
-          }),
-        })
+      let url = '/tasks/' + `${id}/`;
+      await this.authorizeAndFetch(url, 'DELETE', undefined);
       const taskIndex = this.allTasks.findIndex(task => task.id === id);
       this.allTasks.splice(taskIndex, 1)
       this.allTasksSubject.next(this.allTasks)
     } catch (er) {
       console.log(er);
-
     }
   }
 
 
   async addTask(body: any) {
     const category = body.category
-    let categoryResponse = await this.addCategory(JSON.stringify(category))
+    let categoryResponse = await this.addCategory(category)
     let categoryJson = await categoryResponse.json()
     body.category = categoryJson.pk
-    const task = JSON.stringify(body)
-    let url = environment.baseUrl + '/tasks/';
-    let response = await fetch(url,
-      {
-        method: 'POST',
-        headers: new Headers({
-          'Authorization': `token ${this.token}`,
-          'Content-Type': 'application/json',
-        }),
-        body: task
-      })
+    let url = '/tasks/';
+    await this.authorizeAndFetch(url, 'POST', body);
     this.allTasksSubject.next(this.allTasks)
-
   }
 
 
   async addCategory(body: string) {
-    let url = environment.baseUrl + '/categories/';
-    let response = await fetch(url,
-      {
-        method: 'POST',
-        headers: new Headers({
-          'Authorization': `token ${this.token}`,
-          'Content-Type': 'application/json',
-        }),
-        body: body
-      })
+    let response = await this.authorizeAndFetch('/categories/', 'POST', body);
     return response;
-
   }
 
 
