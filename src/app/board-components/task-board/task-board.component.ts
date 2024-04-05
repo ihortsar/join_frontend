@@ -61,6 +61,8 @@ export class TaskBoardComponent implements OnInit {
  * @param state The target state for the dropped task
  */
   async drop(event: any, state: string) {
+    console.log(this.ts.allTasks);
+    
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
@@ -71,7 +73,7 @@ export class TaskBoardComponent implements OnInit {
         event.currentIndex,
       );
 
-      const droppedTask = event.container.data[event.currentIndex]
+      const droppedTask = event.item.data
       droppedTask.state = state
       await this.ts.editTask(droppedTask.id, droppedTask)
     }

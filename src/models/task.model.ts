@@ -8,7 +8,7 @@ interface Task {
         id: any
     },
     assigned_users: {}[],
-    due_date: string,
+    due_date: any,
     priority: string,
     subtasks: {}[],
     state: string,
@@ -28,7 +28,7 @@ export class JoinTask {
         id: any
     }
     assigned_users: {}[]
-    due_date: string
+    due_date: any
     priority: string
     subtasks: {}[]
     state: string

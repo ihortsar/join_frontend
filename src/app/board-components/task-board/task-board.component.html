@@ -5,7 +5,7 @@
         cdkDrop>
         <h1>To-do</h1>
         <app-task-card cdkDrag *ngFor="let task of ts.toDo let i=index" [task]="task"
-            (click)="openDialog('0ms', '0ms', task )"></app-task-card>
+        [cdkDragData]="task" (click)="openDialog('0ms', '0ms', task )"></app-task-card>
     </div>
 
     <div class="subDiv" cdkDropList #inProgressList="cdkDropList" [cdkDropListData]="ts.inProgress"
@@ -13,7 +13,7 @@
         cdkDrop>
         <h1>In progress</h1>
         <app-task-card *ngFor="let task of ts.inProgress" [task]="task" (click)="openDialog('0ms', '0ms', task )"
-            cdkDrag></app-task-card>
+        [cdkDragData]="task" cdkDrag></app-task-card>
     </div>
 
     <div class="subDiv" cdkDropList #awaitList="cdkDropList" [cdkDropListData]="ts.awaiting"
@@ -21,14 +21,14 @@
         cdkDrop>
         <h1>Awaiting feedback</h1>
         <app-task-card *ngFor="let task of ts.awaiting" [task]="task" (click)="openDialog('0ms', '0ms', task )"
-            cdkDrag></app-task-card>
+        [cdkDragData]="task"  cdkDrag></app-task-card>
     </div>
 
     <div class="subDiv" cdkDropList #doneList="cdkDropList" [cdkDropListData]="ts.done"
-        [cdkDropListConnectedTo]="[todoList,todoList, inProgressList]" (cdkDropListDropped)="drop($event, 'done')"
+        [cdkDropListConnectedTo]="[todoList,todoList, inProgressList]" (cdkDropListDropped)="drop($event,'done')"
         cdkDrop>
         <h1>Done</h1>
         <app-task-card *ngFor="let task of ts.done" [task]="task" (click)="openDialog('0ms', '0ms', task )"
-            cdkDrag></app-task-card>
+        [cdkDragData]="task" cdkDrag></app-task-card>
     </div>
 </div>

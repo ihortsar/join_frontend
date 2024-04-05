@@ -16,10 +16,15 @@
             <app-assign-users [task]="task"></app-assign-users>
 
         </div>
+
+
         <div class="subdiv">
             <mat-form-field class="form-field" class="date">
+                <input formControlName="date" matInput [matDatepicker]="picker">
                 <mat-label>Due date</mat-label>
-                <input formControlName="date" type="date" name="description" matInput>
+                <mat-hint>MM/DD/YYYY</mat-hint>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
             </mat-form-field>
 
             <app-priorities (priorityEmitter)="addPriority($event)"></app-priorities>
@@ -40,8 +45,7 @@
                 </div>
             </mat-form-field>
 
-            <button class="addButton" mat-raised-button color="primary"
-                [disabled]="!this.task.priority || !addTaskForm.valid || !task.category.name || 
+            <button class="addButton" mat-raised-button color="primary" [disabled]="!this.task.priority || !addTaskForm.valid || !task.category.name || 
                 task.category.name.trim() === ''">
                 Add task</button>
         </div>

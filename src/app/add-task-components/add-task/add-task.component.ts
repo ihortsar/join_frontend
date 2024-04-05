@@ -17,13 +17,17 @@ import { CategoryComponent } from "../category/category.component";
 import { Router } from '@angular/router';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { AssignUsersComponent } from '../assign-users/assign-users.component';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-add-task',
   standalone: true,
+  providers: [provideNativeDateAdapter()],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss', '../../app.component.scss'],
   encapsulation: ViewEncapsulation.None,
-  imports: [NgIf, NgStyle, AssignUsersComponent, PrioritiesComponent, NgFor, MatCheckboxModule, MatCardModule, MatExpansionModule, MatIconModule, MatButtonModule, FormsModule, MatInputModule, MatFormFieldModule, HttpClientModule, ReactiveFormsModule, CategoryColorPickersComponent, CategoryComponent]
+  imports: [NgIf, NgStyle, AssignUsersComponent, PrioritiesComponent, NgFor, MatDatepickerModule, MatCheckboxModule, MatCardModule, MatExpansionModule, MatIconModule, MatButtonModule, FormsModule, MatInputModule, MatFormFieldModule, HttpClientModule, ReactiveFormsModule, CategoryColorPickersComponent, CategoryComponent]
 })
 export class AddTaskComponent {
   subtasks: { text: string, checked: boolean }[] = []
@@ -38,7 +42,7 @@ export class AddTaskComponent {
   addTaskForm = new FormGroup({
     title: new FormControl('', Validators.required,),
     description: new FormControl('', [Validators.required]),
-    date: new FormControl('', [Validators.required]),
+    date: new FormControl(new Date().toISOString(), [Validators.required]),
     subtasks: new FormControl(''),
   })
 
@@ -52,14 +56,17 @@ export class AddTaskComponent {
     if (this.addTaskForm) {
       this.task.title = this.addTaskForm.get('title')?.value as string;
       this.task.description = this.addTaskForm.get('description')?.value as string;
-      this.task.due_date = this.addTaskForm.get('date')?.value as string;
+      this.task.due_date
+      let date = this.addTaskForm.get('date')?.value as string;
+      const datePipe = new DatePipe('en-US');
+      this.task.due_date = datePipe.transform(date, 'yyyy-MM-dd')?.toString();
       this.task.subtasks = this.subtasks;
       this.task.state = 'toDo'
       await this.ts.addTask(this.task)
       this.router.navigateByUrl('/task_board');
     }
   }
-  
+
 
   /**
    * Adds a new subtask to the current task.

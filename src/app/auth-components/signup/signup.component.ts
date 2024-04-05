@@ -58,17 +58,17 @@ export class SignupComponent implements OnInit {
  * Validates username uniqueness before signup.
  * Navigates to the login page upon successful signup.
  */
-  createUser() {
-    let user = this.getUsersData()
-    if (!this.checkUsername()) {
-      try {
-        this.signUp(user)
-        this.router.navigateByUrl('/login');
-      } catch (er) {
-        alert('Signup fehlgeschlagen');
-      }
+  async createUser() {
+    let user = this.getUsersData();
+    try {
+      let response = await this.signUp(user)
+      this.router.navigateByUrl('/login');
+    } catch (er: any) {
+      if (er['error']['error'] === 'UNIQUE constraint failed: auth_user.username')
+        this.usernameExists = true
     }
   }
+
 
 
   /**
@@ -100,15 +100,4 @@ export class SignupComponent implements OnInit {
   }
 
 
-  /**
- * Checks if the entered username already exists among existing users.
- * Sets usernameExists flag accordingly.
- * @returns Boolean indicating whether the username exists or not
- */
-  checkUsername() {
-    let username = this.signUpForm.get('username')?.value
-    this.usernameExists = this.us.allUsers.find((user: any) =>
-      user.username == username)
-    return this.usernameExists
-  }
 }

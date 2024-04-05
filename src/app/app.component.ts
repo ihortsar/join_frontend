@@ -58,7 +58,6 @@ export class AppComponent {
       await lastValueFrom(this.http.post(url, {}, { headers }));
       localStorage.removeItem('token');
       this.router.navigateByUrl('/login');
-
     }
     catch (er) {
       console.log(er);

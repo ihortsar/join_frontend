@@ -18,7 +18,7 @@ export class UserFormService {
   initializeUsersForm(form: any) {
     this.us.allUsers.forEach((user: any, i: number) => {
       if (this.task && this.task.assigned_users.length > 0) {
-        let index = this.task.assigned_users.findIndex((assignedUser: any) => assignedUser.id === user.id)
+        let index = this.task.assigned_users.findIndex((assignedUser: any) => assignedUser/* .id  */=== user.id)
         if (index === -1) {
           user.checked = false
           form.addControl(`checked${i}`, this.formBuilder.control(user.checked));
@@ -44,8 +44,10 @@ export class UserFormService {
     const formControl = form?.get(control);
     if (formControl) {
       user.checked = formControl.value;
+      console.log(user);
+      
       if (user.checked) {
-        this.task.assigned_users.push(user)
+        this.task.assigned_users.push(user.id)
       } else {
         const index = this.task.assigned_users.findIndex((u: any) => u.id === user.id);
         this.task.assigned_users.splice(index, 1);

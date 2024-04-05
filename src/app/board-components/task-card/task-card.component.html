@@ -1,5 +1,6 @@
 <mat-card class="taskCard">
     <mat-card-content class="taskContent">
+        <h3><i>Deadline:</i> {{task['due_date']}}</h3>
         <h2>{{task['title']}}</h2>
         <span>{{task['description']}}</span>
         <span *ngIf="task['low']" class="urgency low">low</span>

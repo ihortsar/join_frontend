@@ -21,10 +21,17 @@ export class TaskService {
 
   async loadTasks() {
     try {
-      let fetched = await this.authorizeAndFetch('/tasks/', 'GET', undefined);
+      /* let fetched = await this.authorizeAndFetch('/tasks/', 'GET', undefined);
       let json = await fetched.json();
-      this.allTasks = json;
-      this.allTasksSubject.next(this.allTasks);
+      this.allTasks = json; */
+      let loggedUserString = localStorage.getItem('loggedUser');
+      if (loggedUserString !== null) {
+        let loggedUser = JSON.parse(loggedUserString);
+        if (loggedUser && loggedUser.tasks) {
+          this.allTasks = loggedUser.tasks;
+          this.allTasksSubject.next(this.allTasks);
+        }
+      }
     } catch (error) {
       console.error('Error loading tasks:', error);
     }
@@ -67,6 +74,7 @@ export class TaskService {
   async editTask(id: number, task: {}) {
     let url = '/tasks/' + `${id}/`;
     let response = await this.authorizeAndFetch(url, 'PUT', task);
+    this.editTaskInLocal(id, task)
     this.allTasksSubject.next(this.allTasks)
     return response
   }
@@ -78,6 +86,7 @@ export class TaskService {
       await this.authorizeAndFetch(url, 'DELETE', undefined);
       const taskIndex = this.allTasks.findIndex(task => task.id === id);
       this.allTasks.splice(taskIndex, 1)
+      this.deleteTaskInLocal(taskIndex)
       this.allTasksSubject.next(this.allTasks)
     } catch (er) {
       console.log(er);
@@ -91,8 +100,11 @@ export class TaskService {
     let categoryJson = await categoryResponse.json()
     body.category = categoryJson.pk
     let url = '/tasks/';
-    await this.authorizeAndFetch(url, 'POST', body);
+    let response = await this.authorizeAndFetch(url, 'POST', body);
+    let savedTask = await response.json()
+    this.addTaskInLocal(savedTask)
     this.allTasksSubject.next(this.allTasks)
+    console.log(this.allTasks);
   }
 
 
@@ -120,5 +132,36 @@ export class TaskService {
         this.task.completed = (this.completedSubtasks / this.task.subtasks.length) * 100
       }
     })
+  }
+
+
+  addTaskInLocal(task: {}) {
+    let userString = localStorage.getItem('loggedUser')
+    if (userString !== null) {
+      let loggedUser = JSON.parse(userString)
+      loggedUser.tasks.push(task)
+      localStorage.setItem('loggedUser', JSON.stringify(loggedUser))
+    }
+  }
+
+
+  deleteTaskInLocal(i: number) {
+    let userString = localStorage.getItem('loggedUser')
+    if (userString !== null) {
+      let loggedUser = JSON.parse(userString)
+      loggedUser.tasks.splice(i, 1)
+      localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+    }
+  }
+
+
+  editTaskInLocal(id: number, task: {}) {
+    let userString = localStorage.getItem('loggedUser')
+    if (userString !== null) {
+      let loggedUser = JSON.parse(userString)
+      const taskIndex = this.allTasks.findIndex(task => task.id === id);
+      loggedUser.tasks[taskIndex] = task
+      localStorage.setItem('loggedUser', JSON.stringify(loggedUser));
+    }
   }
 }

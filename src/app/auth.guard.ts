@@ -1,24 +1,21 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { UsersService } from './services/users.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate {
 
-  constructor(private router: Router) {}
 
-  canActivate(
-    next: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): boolean {
-    // Check if token exists in local storage
-    const token = localStorage.getItem('token');
+  constructor(private router: Router, private us: UsersService) { }
 
-    if (token) {
-      // Token exists, allow navigation
+  canActivate(_next: ActivatedRouteSnapshot, _state: RouterStateSnapshot): boolean {
+
+
+    if (localStorage.getItem('token')) {
       return true;
     } else {
-      // Token doesn't exist, redirect to login page
       this.router.navigate(['/login']);
       return false;
     }
