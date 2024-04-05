@@ -104,7 +104,6 @@ export class TaskService {
     let savedTask = await response.json()
     this.addTaskInLocal(savedTask)
     this.allTasksSubject.next(this.allTasks)
-    console.log(this.allTasks);
   }
 
 

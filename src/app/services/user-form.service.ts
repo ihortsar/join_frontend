@@ -29,7 +29,7 @@ export class UserFormService {
       } else {
         form.addControl(`checked${i}`, this.formBuilder.control(user.checked));
       }
-    });
+    }); 
   }
 
 
@@ -44,8 +44,6 @@ export class UserFormService {
     const formControl = form?.get(control);
     if (formControl) {
       user.checked = formControl.value;
-      console.log(user);
-      
       if (user.checked) {
         this.task.assigned_users.push(user.id)
       } else {

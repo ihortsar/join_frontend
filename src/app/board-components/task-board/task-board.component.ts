@@ -60,9 +60,7 @@ export class TaskBoardComponent implements OnInit {
  * @param event The drop event
  * @param state The target state for the dropped task
  */
-  async drop(event: any, state: string) {
-    console.log(this.ts.allTasks);
-    
+  async drop(event: any, state: string) {  
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else {
